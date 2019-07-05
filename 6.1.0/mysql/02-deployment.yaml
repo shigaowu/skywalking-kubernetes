@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-test
+  namespace: {{your_namespace}}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql-test
+    spec:
+      containers:
+      - name: mysql-test
+        image: mysql:5.7
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TZ
+          value: Asia/Shanghai
+        - name: LC_ALL
+          value: en_US.UTF-8
+        - name: MYSQL_ROOT_PASSWORD
+          value: {{your_passwd}}
+        args:
+        - --lower-case-table-names=1
+        - --character-set-server=utf8
+        - --default-time-zone=+8:00
+        - --sql-mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+        - --max_connections=1000
+        - --event_scheduler=on
+        - --show_compatibility_56=on
+        resources:
+          limits:
+            cpu: "8"
+            memory: 16Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi
+        volumeMounts:
+        - name: localtime
+          mountPath: /etc/localtime
+        - name: data-vol
+          mountPath: /var/lib/mysql
+          subPath: mysql
+          readOnly: false
+      volumes:
+      - name: localtime
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Shanghai
+      - name: data-vol
+        persistentVolumeClaim:
+          claimName: {{your_pvc}}
+
