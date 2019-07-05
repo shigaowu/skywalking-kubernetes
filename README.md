@@ -22,11 +22,12 @@ metadata:
 
 **git地址**
 [shigaowu/skywalking-kubernetes](https://github.com/shigaowu/skywalking-kubernetes)
-                  clone下来后按需修改,并增加00-init.yaml
-                  cd 6.1.0
                   
-
 		  
+		  clone下来后按需修改,并增加00-init.yaml
+                  
+		  cd 6.1.0
+                  
                   kubectl apply -f 00-init.yml
                   kubectl apply -f mysql
                   kubectl apply -f oap
