@@ -25,10 +25,10 @@ metadata:
                   
 		  
 		  clone下来后按需修改,并增加00-init.yaml
+ 
+                  cd 6.1.0
                   
-		  cd 6.1.0
-                  
-                  kubectl apply -f 00-init.yml
+                  kubectl apply -f 00-init.yaml
                   kubectl apply -f mysql
                   kubectl apply -f oap
                   kubectl apply -f ui
@@ -39,6 +39,6 @@ metadata:
 这样你就装好了skywalking的server端了！可以打开页面了！
 
 
-##### 联系方式
-shi.gaowu@163.com
+##### 欢迎学习交流 联系方式
+**shi.gaowu@163.com**
 
