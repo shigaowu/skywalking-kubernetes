@@ -2,7 +2,7 @@
 该项目可以迅速将skywalking 6.1.0部署进kubernetes(k8s）
 
 ## 描述
-我弄这个主要是某项目的测试环境，因为项目部署在k8s上，需要在k8s中部署一套skywalking来监控项目的一些状态
+网上找不到在k8s上部署skywalking利用mysql存储的实例.所以自己研究！
 
 -------------
 ## 安装server端
