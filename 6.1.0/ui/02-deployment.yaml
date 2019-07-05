@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ui-deployment
-  namespace: {{your namespace}}   #改成你自己的
+  namespace: {{your_namespace}}   #改成你自己的
   labels:
     app: ui
 spec:
