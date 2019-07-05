@@ -5,7 +5,7 @@
 我弄这个主要是某项目的测试环境，因为项目部署在k8s上，需要在k8s中部署一套skywalking来监控项目的一些状态
 
 -------------
-# 安装使用
+## 安装server端
 
 ###### 先自己创建一个namespace或者使用现有项目的namespace:
 
@@ -36,7 +36,43 @@ metadata:
 
 **注意clone下来改好里面提示需要改的再执行，00-init.yaml是建名称空间的(当然你可以整合其他初始化环境的比如pv，pvc等一起初始化环境)，参考上文**
 
-这样你就装好了skywalking的server端了！可以打开页面了！
+这样你就装好了skywalking的server端了,可以打开页面了!接下来要安装agent端.
+
+## 安装agent端
+
+###### 首先你要创建一个包含了apm-agent的基础镜像!
+
+```
+FROM openjdk:8
+
+ADD apm_agent/skywalking /skywalking-agent/
+
+# 构建镜像
+# docker build -t 'apm-agent:1.0' -f .
+```
+
+###### 然后创建你的微服务时候基于这个镜像来创建：
+
+```
+FROM apm-agent:1.0
+
+MAINTAINER shi.gaowu@163.com
+
+RUN ...
+
+ADD ...
+
+WORKDIR ...
+
+ENV SW_AGENT_NAMESPACE={{your_namespace}} SW_AGENT_NAME={{server_name}} SW_AGENT_COLLECTOR_BACKEND_SERVICES=oap:11800
+
+CMD ["bash", "-c", "java -javaagent:/skywalking-agent/skywalking-agent.jar -jar *.jar --CONFIG_URL=..."]
+```
+
+**这里特别要注意设置ENV的三个值，还有启动jar时候需要带的参数-javaagent:/skywalking-agent/skywalking-agent.jar**
+
+
+利用这种方式使你的微服务启动时候包含了apm-agent,这样就可以和server端通信了！
 
 
 ##### 欢迎学习交流 联系方式
