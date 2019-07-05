@@ -22,15 +22,16 @@ metadata:
 
 **git地址**
 [shigaowu/skywalking-kubernetes](https://github.com/shigaowu/skywalking-kubernetes)
-                  clone下来后按需修改
+                  clone下来后按需修改,并增加00-init.yaml
                   cd 6.1.0
-                  然后执行如下操作
-		  ```
+                  
+
+		  
                   kubectl apply -f 00-init.yml
                   kubectl apply -f mysql
                   kubectl apply -f oap
                   kubectl apply -f ui
-                  ```
+                  
 
 **注意clone下来改好里面提示需要改的再执行，00-init.yaml是建名称空间的(当然你可以整合其他初始化环境的比如pv，pvc等一起初始化环境)，参考上文**
 这样你就装好了skywalking的server端了！可以打开页面了！
